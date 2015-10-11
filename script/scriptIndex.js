@@ -2,23 +2,30 @@
  * Created by JUANPABLO on 11/10/2015.
  */
 
-// Create the store for later use
-var store = new dojo.data.ItemFileReadStore({
-    contentType: 'application/json'
-    ,clearOnClose: true
-    ,urlPreventCache: true
-    ,url: "http://192.168.1.65:9080/RAD8JAX-RSWeb/jaxrs/customers"
+dojo.xhrGet({
+    url: "https://restcountries.eu/rest/v1/all",
+    handleAs: "json",
+    load: function(obj) {
+        var countryObj = {
+            name: obj.name,
+            capital: obj.capital,
+            alpha2Code: obj.alpha2Code
+        };
+        /* here, obj will already be a JS object deserialized from the JSON response */
+
+        require(["dojo/dom-construct"], function(domConstruct){
+            // create a div node
+            var node = domConstruct.create("div");
+        });
+
+
+
+
+
+    },
+    error: function(err) {
+        /* this will execute if the response couldn't be converted to a JS object,
+         or if the request was unsuccessful altogether. */
+    }
 });
 
-
-    store.fetch({
-        onItem: function(item, request) {
-            alert('I fire after each returned json item')
-        }
-        ,onComplete: function(items, findResult) {
-            alert('I fire when the data has loaded completely.');
-        }
-        ,onError: function(error, request) {
-            alert('I fire when an error occurs');
-        }
-    });
